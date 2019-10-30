@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ohtuesimerkki.StatisticsTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-10-30T15:04:41" hostname="tikky" time="0.007">
+  <properties/>
+  <testcase name="search" classname="ohtuesimerkki.StatisticsTest" time="0.004"/>
+  <testcase name="team" classname="ohtuesimerkki.StatisticsTest" time="0.002"/>
+  <testcase name="topScorers" classname="ohtuesimerkki.StatisticsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
