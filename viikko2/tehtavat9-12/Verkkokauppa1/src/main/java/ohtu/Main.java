@@ -9,11 +9,6 @@ public class Main {
     public static void main(String[] args) {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 
-//        Viitegeneraattori viitegen = ctx.getBean(Viitegeneraattori.class);
-//        Kirjanpito kirjanpito      = new Kirjanpito();
-//        Varasto varasto            = new Varasto(kirjanpito);
-//        Pankki pankki              = new Pankki(kirjanpito);
-//        Kauppa kauppa              = new Kauppa(varasto, pankki, viitegen);
         Kauppa kauppa = ctx.getBean(Kauppa.class);
 
         // kauppa hoitaa yhden asiakkaan kerrallaan seuraavaan tapaan:
