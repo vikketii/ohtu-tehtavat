@@ -2,16 +2,16 @@ package ohtu.verkkokauppa;
 
 public class Kauppa {
 
-    private Varasto varasto;
-    private Pankki pankki;
+    private RajapintaVarasto rajapintaVarasto;
+    private RajapintaPankki rajapintaPankki;
     private Ostoskori ostoskori;
-    private Viitegeneraattori viitegeneraattori;
+    private RajapintaViitegeneraattori rajapintaViitegeneraattori;
     private String kaupanTili;
 
-    public Kauppa() {
-        varasto = Varasto.getInstance();
-        pankki = Pankki.getInstance();
-        viitegeneraattori = Viitegeneraattori.getInstance();
+    public Kauppa(RajapintaVarasto rajapintaVarasto, RajapintaPankki rajapintaPankki, RajapintaViitegeneraattori rajapintaViitegeneraattori) {
+        this.rajapintaVarasto = rajapintaVarasto;
+        this.rajapintaPankki = rajapintaPankki;
+        this.rajapintaViitegeneraattori = rajapintaViitegeneraattori;
         kaupanTili = "33333-44455";
     }
 
@@ -20,23 +20,23 @@ public class Kauppa {
     }
 
     public void poistaKorista(int id) {
-        Tuote t = varasto.haeTuote(id); 
-        varasto.palautaVarastoon(t);
+        Tuote t = rajapintaVarasto.haeTuote(id);
+        rajapintaVarasto.palautaVarastoon(t);
     }
 
     public void lisaaKoriin(int id) {
-        if (varasto.saldo(id)>0) {
-            Tuote t = varasto.haeTuote(id);             
+        if (rajapintaVarasto.saldo(id)>0) {
+            Tuote t = rajapintaVarasto.haeTuote(id);
             ostoskori.lisaa(t);
-            varasto.otaVarastosta(t);
+            rajapintaVarasto.otaVarastosta(t);
         }
     }
 
     public boolean tilimaksu(String nimi, String tiliNumero) {
-        int viite = viitegeneraattori.uusi();
+        int viite = rajapintaViitegeneraattori.uusi();
         int summa = ostoskori.hinta();
         
-        return pankki.tilisiirto(nimi, viite, tiliNumero, kaupanTili, summa);
+        return rajapintaPankki.tilisiirto(nimi, viite, tiliNumero, kaupanTili, summa);
     }
 
 }
