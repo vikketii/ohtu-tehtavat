@@ -83,4 +83,53 @@ public class KauppaTest {
 
         verify(pankki).tilisiirto(eq("pekka"), anyInt(), eq("12345"), eq("33333-44455"),eq(5));
     }
+
+    @Test
+    public void ostoskoriTyhjentyyMaksunJalkeen() {
+        Kauppa k = new Kauppa(varasto, pankki, viite);
+
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+        k.tilimaksu("pekka", "12345");
+
+        verify(pankki).tilisiirto(eq("pekka"), anyInt(), eq("12345"), eq("33333-44455"),eq(5));
+    }
+
+    @Test
+    public void pyydetaanUusiViiteJokaiseenMaksuun() {
+        Kauppa k = new Kauppa(varasto, pankki, viite);
+
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+        k.tilimaksu("pekka", "12345");
+
+        verify(viite, times(1)).uusi();
+
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+        k.tilimaksu("pekka", "12345");
+
+        verify(viite, times(2)).uusi();
+
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+        k.tilimaksu("pekka", "12345");
+
+        verify(viite, times(3)).uusi();
+    }
+
+    @Test
+    public void ostoskoristaPoistaminenNollaaSumman() {
+        Kauppa k = new Kauppa(varasto, pankki, viite);
+
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+        k.poistaKorista(1);
+        k.tilimaksu("pekka", "12345");
+
+        verify(pankki).tilisiirto(eq("pekka"), anyInt(), eq("12345"), eq("33333-44455"),eq(0));
+    }
 }
